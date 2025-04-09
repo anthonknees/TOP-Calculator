@@ -14,12 +14,13 @@ function divide(num1,num2){
   return num1/num2;
 }
 
-const operatorsList = ["+", "-", "/", "*", "="];
+function clearOperatorInDisplay(){
+  if (operatorsList.some(value => value == display.textContent)){
+    operator = display.textContent;
+    display.textContent = undefined;
+  }
+}
 
-
-let num1;
-let num2;
-let operator;
 
 function operate(num1, num2, operator){
   num1 = Number(num1);
@@ -32,7 +33,11 @@ function operate(num1, num2, operator){
   } else if (operator === "*"){
     return multiplty(num1, num2);
   } else if (operator === "/"){
+    if (num2 == 0){
+      return "SIKE!";
+    } else {
     return divide(num1,num2);
+    }
   }
 }
 
@@ -45,12 +50,18 @@ function clearCalculator(){
   num1 = undefined;
   num2 = undefined;
   operator = undefined;
+  isResult = false;
 }
 
 function addDecimal(){
   if (!display.textContent.includes(".")){ // Check if decimal already exists
     display.textContent = display.textContent + "."
     }
+}
+
+function updateNum1AndNum2(){
+  num1 = num2;
+  num2 = display.textContent;
 }
 const operators = Array.from(document.querySelectorAll(".operator"));
 const operands = Array.from(document.querySelectorAll(".operand"));
@@ -77,6 +88,7 @@ function clearDisplay(){
   display.textContent = undefined;
 }
 
+// Functions handler
 functions.map(button => button.addEventListener("click", () => {
   let functionCalled = button.textContent;
   switch (functionCalled) {
@@ -91,6 +103,7 @@ functions.map(button => button.addEventListener("click", () => {
       addDecimal();
       break;
     case "=":
+      updateNum1AndNum2();
       display.textContent = operate(num1, num2, operator);
       clearOperator();
       updateNumber2();
@@ -98,11 +111,25 @@ functions.map(button => button.addEventListener("click", () => {
   }
 }))
 
+const operatorsList = ["+", "-", "/", "*", "="];
+
+
+let num1;
+let num2;
+let operator;
+let isResult = false;
+
 // Operator handler
 operators.map(operatorElement => operatorElement.addEventListener("click", () => {
   if (operator !== undefined){
-    operateAndDisplay(num1, num2, operator);
+    isResult = true;
+    updateNum1AndNum2();
+    display.textContent = operate(num1, num2, operator);
+    updateNumber2();
+    // clearDisplay();
   } else {
+  num1 = num2;
+  num2 = display.textContent;
   display.textContent = operatorElement.textContent;
   operator = operatorElement.textContent;
   }
@@ -110,14 +137,12 @@ operators.map(operatorElement => operatorElement.addEventListener("click", () =>
 
 // Operand handler
 operands.map(operand => operand.addEventListener("click", (event) => {
-  if (operatorsList.some(value => value == display.textContent)){
-    operator = display.textContent;
-    display.textContent = undefined;
-    console.log("its a operator!")
+  clearOperatorInDisplay()
+  if (isResult == true){
+    clearDisplay();
+    isResult = false;
   }
   display.textContent = display.textContent + operand.textContent;
-  num1 = num2;
-  num2 = display.textContent;
 }))
 
 
