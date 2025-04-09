@@ -41,7 +41,7 @@ body {
   align-items: center; 
   justify-content: center;
   gap: 5px;
-  background-color: black;
+  background-color: rgb(255, 166, 0);
 }
 
 .btn {
