@@ -1,0 +1,60 @@
+:root {
+  --buttonHeight: 80px;
+  --buttonWidth: 80px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display {
+  height: var(--buttonHeight);
+  width: 315px;
+  background-color: rgb(173, 218, 230);
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding: 10px;
+}
+
+.display p{
+  font-size: 60px;
+}
+
+#calculator {
+  width: 350px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  gap: 5px;
+  background-color: black;
+}
+
+.btn {
+  min-height: var(--buttonHeight);
+  min-width: var(--buttonWidth);
+  font-size: 25px;
+}
+
+.double {
+  min-width: 165px;
+}
+
+.row {
+  display: flex;
+  gap: 5px;
+}
